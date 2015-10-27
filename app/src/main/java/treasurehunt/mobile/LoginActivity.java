@@ -168,10 +168,22 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             focusView = mPasswordView;
             cancel = true;
         }
-        else if (!isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
-            cancel = true;
+        else switch (isPasswordValid(password)) {
+            case 0 :
+                break;
+            case 1 :
+                mPasswordView.setError(getString(R.string.error_invalid_password_length));
+                focusView = mPasswordView;
+                cancel = true;
+                break;
+            case 2 :
+                mPasswordView.setError(getString(R.string.error_invalid_password_regexp));
+                focusView = mPasswordView;
+                cancel = true;
+                break;
+            default:
+                break;
+
         }
 
         // Check for a valid email address.
@@ -203,9 +215,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         return email.matches(emailRegExp);
     }
 
-    private boolean isPasswordValid(String password) {
-        String passwordRegExp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\\\S+$).{4,}$";
-        return password.length() > 4 && password.matches(passwordRegExp);
+
+    /**
+     * Return if a password is valid or not. The password must contain at least one capital letter, one number,
+     * and one lower letter. It must not contain whitespaces. The length must be greater than 6.
+     * @param password Password text
+     * @return 0 if the password is valid, 1 if the password is not valid because of it's length,
+     * 2 if it is not valid because it does not match the regular expression.
+     */
+    private int isPasswordValid(String password) {
+        String passwordRegExp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\\\S+$).{4,}$";
+        if(password.length() <= 6) {
+            return 1;
+        }
+        if(password.matches(passwordRegExp)) {
+            return 2;
+        }
+        return  0;
     }
 
     /**
