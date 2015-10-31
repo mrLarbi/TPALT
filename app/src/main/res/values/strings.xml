@@ -3,7 +3,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_login">Sign in</string>
-    <string name="optionnal">Optionnal</string>
+    <string name="optional">Optional</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -11,7 +11,7 @@
     <string name="prompt_username">Username</string>
     <string name="prompt_confirmation">Confirmation</string>
     <string name="prompt_phone">Phone</string>
-    <string name="prompt_zipcode">Zipcode</string>
+    <string name="prompt_zipcode">ZIP Code</string>
     <string name="prompt_name">Name</string>
 
     <string name="action_sign_in">Sign in</string>
@@ -20,7 +20,7 @@
     <string name="error_invalid_password_length_short">This password is too short</string>
     <string name="error_invalid_password_length_long">This password is too long</string>
     <string name="error_invalid_password_regexp">
-        The password must contain a capital letter, a lower letter and un number
+        The password must contain a capital letter, a lower letter and a number
     </string>
     <string name="error_incorrect_password">This password is incorrect</string>
 
@@ -48,6 +48,11 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_profile">Profile</string>
+
+    <!-- Strings related to CreateHuntActivity -->
+    <string name="createHunt">Create</string>
+    <string name="cancelHunt">Cancel</string>
+    <string name="huntListTitle">Hunts</string>
 
     <!-- Strings related to Settings -->
 
