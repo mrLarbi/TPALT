@@ -2,17 +2,19 @@ package treasurehunt.mobile;
 
 public class UserProfile {
     private String mUsername;
+    private String mName;
     private String mEmail;
     private String mPhone;
     private String mZipcode;
     private String mSexe;
 
-    public UserProfile(String username, String email, String phone, String zipcode, String sexe) {
+    public UserProfile(String username, String name, String email, String phone, String zipcode, String sexe) {
         mUsername = username;
         mEmail = email;
         mPhone = phone;
         mZipcode = zipcode;
         mSexe = sexe;
+        mName = name;
     }
 
     public String getUsername() {
@@ -53,5 +55,13 @@ public class UserProfile {
 
     public void setSexe(String sexe) {
         mSexe = sexe;
+    }
+
+    public String getName() {
+        return mName;
+    }
+
+    public void setName(String name) {
+        mName = name;
     }
 }

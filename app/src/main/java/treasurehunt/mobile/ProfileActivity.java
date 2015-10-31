@@ -29,7 +29,24 @@ public class ProfileActivity extends AppCompatActivity {
 
         //Dummy user
 
+        String username = getString(R.string.dummy_username);
+        String name = getString(R.string.dummy_name);
+        String email = getString(R.string.dummy_email);
+        String phone = getString(R.string.dummy_phone);
+        String zipcode = getString(R.string.dummy_zipcode);
+        String sexe = getString(R.string.male);
+
+
+        UserProfile dummy_user = new UserProfile(
+                username,
+                name,
+                email,
+                phone,
+                zipcode,
+                sexe);
+
         
+
     }
 
 
