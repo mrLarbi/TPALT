@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_weight="1" >
+
+    <ImageView
+        android:id="@+id/paristhumbnail"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/paristhumbnail" />
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="75px"
+        android:layout_marginBottom="75px"
+        android:layout_marginRight="25px"
+        android:layout_marginLeft="25px"
+        android:background="@color/appBg" >
+
+        <TextView
+            android:textColor="@color/appText"
+            android:id="@+id/createHuntListTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/huntListTitle"
+            android:layout_gravity="center"
+            android:textSize="@dimen/subtitle_font"/>
+    </LinearLayout>
+</LinearLayout>
