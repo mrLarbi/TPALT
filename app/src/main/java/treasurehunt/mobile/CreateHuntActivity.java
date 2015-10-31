@@ -21,7 +21,7 @@ public class CreateHuntActivity extends Activity implements View.OnClickListener
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_createHunt);
+        setContentView(R.layout.activity_create_hunt);
 
         Button createHuntButton = (Button) findViewById(R.id.createHuntButton);
         Button cancelHuntButton = (Button) findViewById(R.id.cancelHuntButton);

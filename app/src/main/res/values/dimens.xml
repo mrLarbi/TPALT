@@ -10,6 +10,9 @@
     <dimen name="nav_header_height">160dp</dimen>
 
     <!-- Dimensions for texts -->
-    <dimen name="profile_data"> 24dp </dimen>
+    <dimen name="profile_data"> 20dp </dimen>
     <dimen name="profile_username"> 32dp </dimen>
+    
+    <!-- Dimensions for margins -->
+    <dimen name="profile_data_margin"> 50dp </dimen>
 </resources>
