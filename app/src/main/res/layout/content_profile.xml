@@ -11,9 +11,10 @@
     tools:showIn="@layout/activity_profile" tools:context="treasurehunt.mobile.ProfileActivity">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/appBg">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,94 +33,130 @@
                 android:textSize="@dimen/profile_username"
                 android:layout_gravity="center"
                 android:layout_marginLeft="24dp"
+                android:textColor="@color/appText"
                 />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/prompt_email"
-                android:textColor="#FFFFFF"
-                android:textSize="@dimen/profile_data"/>
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/profile_data_margin">
 
-            <TextView
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/prompt_email"
+                    android:textColor="@color/appText"
+                    android:textSize="@dimen/profile_data"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dummy_email"
+                    android:textColor="@color/appText"
+                    android:gravity="right"
+                    android:textSize="@dimen/profile_data"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/dummy_email"
-                android:textColor="#FFFFFF"
-                android:gravity="center_vertical|right"
-                android:textSize="@dimen/profile_data"/>
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/profile_data_margin">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/prompt_name"
+                    android:textColor="@color/appText"
+                    android:textSize="@dimen/profile_data"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dummy_name"
+                    android:textColor="@color/appText"
+                    android:gravity="right"
+                    android:textSize="@dimen/profile_data"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/profile_data_margin">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/prompt_phone"
+                    android:textColor="@color/appText"
+                    android:textSize="@dimen/profile_data"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dummy_phone"
+                    android:textColor="@color/appText"
+                    android:gravity="right"
+                    android:textSize="@dimen/profile_data"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/profile_data_margin">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/prompt_zipcode"
+                    android:textColor="@color/appText"
+                    android:textSize="@dimen/profile_data"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dummy_zipcode"
+                    android:textColor="#FFFFFF"
+                    android:gravity="center_vertical|right"
+                    android:textSize="@dimen/profile_data"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/profile_data_margin">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/prompt_sexe"
+                    android:textColor="@color/appText"
+                    android:textSize="@dimen/profile_data"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/male"
+                    android:textColor="#FFFFFF"
+                    android:gravity="center_vertical|right"
+                    android:textSize="@dimen/profile_data"/>
+
+            </LinearLayout>
 
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/prompt_name"
-                android:textColor="#FFFFFF"
-                android:textSize="@dimen/profile_data"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/dummy_name"
-                android:textColor="#FFFFFF"
-                android:gravity="center_vertical|right"
-                android:textSize="@dimen/profile_data"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/prompt_phone"
-                android:textColor="#FFFFFF"
-                android:textSize="@dimen/profile_data"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/dummy_phone"
-                android:textColor="#FFFFFF"
-                android:gravity="center_vertical|right"
-                android:textSize="@dimen/profile_data"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/prompt_zipcode"
-                android:textColor="#FFFFFF"
-                android:textSize="@dimen/profile_data"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/dummy_zipcode"
-                android:textColor="#FFFFFF"
-                android:gravity="center_vertical|right"
-                android:textSize="@dimen/profile_data"/>
-
-        </LinearLayout>
 
 
     </LinearLayout>
