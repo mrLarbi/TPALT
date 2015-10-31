@@ -18,8 +18,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,8 +30,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -163,21 +159,22 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if(TextUtils.isEmpty(password)) {
-            mPasswordView.setError(getString(R.string.error_field_required));
-            focusView = mPasswordView;
-            cancel = true;
-        }
-        else switch (isPasswordValid(password)) {
-            case 0 :
+
+        switch (Validator.isValidPassword(password)) {
+            case Validator.OK :
                 break;
-            case 1 :
-                mPasswordView.setError(getString(R.string.error_invalid_password_length));
+            case Validator.PASSWORD_ERROR_MATCH:
+                mPasswordView.setError(getString(R.string.error_invalid_password_regexp));
                 focusView = mPasswordView;
                 cancel = true;
                 break;
-            case 2 :
-                mPasswordView.setError(getString(R.string.error_invalid_password_regexp));
+            case Validator.PASSWORD_ERROR_TOOLONG:
+                mPasswordView.setError(getString(R.string.error_invalid_password_length_long));
+                focusView = mPasswordView;
+                cancel = true;
+                break;
+            case Validator.PASSWORD_ERROR_TOOSHORT:
+                mPasswordView.setError(getString(R.string.error_invalid_password_length_short));
                 focusView = mPasswordView;
                 cancel = true;
                 break;
@@ -186,15 +183,21 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         }
 
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
-            cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
-            cancel = true;
+        switch (Validator.isValidMail(email)) {
+            case Validator.OK :
+                break;
+            case Validator.EMAIL_ERROR_MATCH:
+                mEmailView.setError(getString(R.string.error_invalid_email_regexp));
+                focusView = mEmailView;
+                cancel = true;
+                break;
+            case Validator.EMAIL_ERROR_EMPTY:
+                mEmailView.setError(getString(R.string.error_field_required));
+                focusView = mEmailView;
+                cancel = true;
+                break;
+            default:
+                break;
         }
 
         if (cancel) {
@@ -208,30 +211,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
         }
-    }
-
-    private boolean isEmailValid(String email) {
-        String emailRegExp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-        return email.matches(emailRegExp);
-    }
-
-
-    /**
-     * Return if a password is valid or not. The password must contain at least one capital letter, one number,
-     * and one lower letter. It must not contain whitespaces. The length must be greater than 6.
-     * @param password Password text
-     * @return 0 if the password is valid, 1 if the password is not valid because of it's length,
-     * 2 if it is not valid because it does not match the regular expression.
-     */
-    private int isPasswordValid(String password) {
-        String passwordRegExp = "^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$";
-        if(password.length() <= 6) {
-            return 1;
-        }
-        if(!password.matches(passwordRegExp)) {
-            return 2;
-        }
-        return  0;
     }
 
     /**
