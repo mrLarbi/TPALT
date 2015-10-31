@@ -28,7 +28,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+import org.json.JSONStringer;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -324,7 +331,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             try {
                 // Simulate network access.
                 Thread.sleep(2000);
-            } catch (InterruptedException e) {
+                String response = Jsoup.connect(Parameters.LOGIN_URL)
+                        .data(new HashMap<String, String>())
+                        .ignoreContentType(true)
+                        .execute()
+                        .body();
+
+
+                // Parse the json response.
+                
+            } catch (InterruptedException | IOException e) {
                 return false;
             }
 
