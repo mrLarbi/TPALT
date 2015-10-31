@@ -54,6 +54,7 @@
     <string name="createHunt">Create</string>
     <string name="cancelHunt">Cancel</string>
     <string name="huntListTitle">Hunts</string>
+    <string name="newHuntTitle">New Hunt</string>
 
     <!-- Strings related to Settings -->
 
