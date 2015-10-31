@@ -97,6 +97,12 @@
 
     <string name="pref_title_system_sync_settings">System sync settings</string>
 
+    <string name="dummy_username">Skull Man</string>
+    <string name="dummy_name">Skeleton Idiot</string>
+    <string name="dummy_phone">0101010101</string>
+    <string name="dummy_zipcode">10110</string>
+    <string name="dummy_email">skull_man@wilycorp.meg</string>
+
     <!-- Example settings for Notifications -->
     <string name="pref_header_notifications">Notifications</string>
 
