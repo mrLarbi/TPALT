@@ -1,10 +1,8 @@
 package treasurehunt.mobile;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -13,7 +11,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -21,6 +21,9 @@ import java.util.ArrayList;
 
 public class ProfileActivity extends AppCompatActivity {
 
+    private String currentHuntName = null;
+
+    private ImageView avatarView;
     private TextView usernameView;
     private TextView emailView;
     private TextView nameView;
@@ -30,11 +33,28 @@ public class ProfileActivity extends AppCompatActivity {
 
     private UserProfile dummy_user;
 
+    private LinearLayout mainLayout;
+    private RelativeLayout showProfileLayout;
+    private LinearLayout showHuntsLayout;
+    private LinearLayout viewMessagesLayout;
+    private LinearLayout deleteHuntLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        showViewProfile();
+        setContentView(R.layout.activity_profile);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        mainLayout = (LinearLayout) findViewById(R.id.profile_layout);
 
+        LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        showProfileLayout = (RelativeLayout) inflater.inflate(R.layout.content_profile, null);
+        showHuntsLayout = (LinearLayout) inflater.inflate(R.layout.show_hunts, null);
+        viewMessagesLayout = (LinearLayout) inflater.inflate(R.layout.view_messages, null);
+        deleteHuntLayout = (LinearLayout) inflater.inflate(R.layout.delete_hunt, null);
+
+        showViewProfile();
     }
 
     @Override
@@ -52,11 +72,11 @@ public class ProfileActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.profile_menu_created_hunts) {
-            showHunts(1); //
+            showHunts(true); //
             return true;
         }
         if (id == R.id.profile_menu_current_hunts) {
-            showHunts(0);
+            showHunts(false);
             return true;
         }
         if (id == R.id.profile_menu_view_profile) {
@@ -67,10 +87,11 @@ public class ProfileActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void showHunts(int deletable) {
-        setContentView(R.layout.show_hunts);
+    private void showHunts(boolean deletable) {
+        showHuntsLayout.removeAllViews();
+        updateMainLayout(showHuntsLayout);
 
-        if(deletable == 1) {
+        if(deletable) {
             //HTTP request to get created hunts
         }
         else {
@@ -81,37 +102,18 @@ public class ProfileActivity extends AppCompatActivity {
         dummyHunts.add(new Hunt("http://vignette2.wikia.nocookie.net/megaman/images/a/af/WilyCastle2.png/revision/latest?cb=20100315053827", "Wily castle 2"));
         dummyHunts.add(new Hunt("http://iamericm.com/wp-content/uploads/sites/2/2013/11/rock-man-4-minus-infinity-screen-cap10.png", "Cossack castle"));
 
-        LinearLayout hunts = (LinearLayout) findViewById(R.id.show_hunts);
-
         for(int i = 0 ; i < dummyHunts.size() ; i++) {
-            addHuntToView(hunts, dummyHunts.get(i), deletable);
+            addHuntToView(showHuntsLayout, dummyHunts.get(i), deletable);
         }
     }
 
-    private void addHuntToView(LinearLayout huntsLayout, Hunt hunt, int deletable) {
-        LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.hunt, null);
-
-        ImageView huntImage = (ImageView) view.findViewById(R.id.hunt_image);
-        TextView huntName = (TextView) view.findViewById(R.id.hunt_name);
-        LinearLayout huntButtons = (LinearLayout) view.findViewById(R.id.hunt_buttons);
-
-        Picasso.with(getBaseContext()).load(hunt.getImage()).into(huntImage);
-        huntName.setText(hunt.getName());
-        huntButtons.setVisibility(deletable);
-
-        huntsLayout.addView(view);
-    }
-
     private void showViewProfile() {
-        setContentView(R.layout.activity_profile);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
+        updateMainLayout(showProfileLayout);
         //TODO : HTTP request here
 
         //Dummy user
 
+        String avatar = "http://socksmakepeoplesexy.net/images/robotmasters/Skull%20Man.PNG";
         String username = getString(R.string.dummy_username);
         String name = getString(R.string.dummy_name);
         String email = getString(R.string.dummy_email);
@@ -121,6 +123,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         dummy_user = new UserProfile(
+                avatar,
                 username,
                 name,
                 email,
@@ -128,6 +131,7 @@ public class ProfileActivity extends AppCompatActivity {
                 zipcode,
                 sexe);
 
+        avatarView = (ImageView) findViewById(R.id.profile_avatar);
         usernameView = (TextView) findViewById(R.id.profile_username);
         emailView = (TextView) findViewById(R.id.profile_email);
         nameView = (TextView) findViewById(R.id.profile_name);
@@ -135,6 +139,7 @@ public class ProfileActivity extends AppCompatActivity {
         zipcodeView = (TextView) findViewById(R.id.profile_zipcode);
         sexeView = (TextView) findViewById(R.id.profile_sexe);
 
+        Picasso.with(getBaseContext()).load(dummy_user.getAvatar()).into(avatarView);
         usernameView.setText(dummy_user.getUsername());
         emailView.setText(dummy_user.getEmail());
         nameView.setText(dummy_user.getName());
@@ -143,4 +148,97 @@ public class ProfileActivity extends AppCompatActivity {
         sexeView.setText(dummy_user.getSexe());
     }
 
+    public void delete_hunt(View view) {
+        updateCurrentHunt(view);
+        attemptToDeleteHunt();
+    }
+
+    public void see_hunt_comments(View view) {
+        updateCurrentHunt(view);
+        showHuntComments();
+    }
+
+    private void attemptToDeleteHunt() {
+        updateMainLayout(deleteHuntLayout);
+    }
+
+    private void showHuntComments() {
+        viewMessagesLayout.removeAllViews();
+        updateMainLayout(viewMessagesLayout);
+
+        //dummy messages
+
+        ArrayList<Message> dummy_messages = new ArrayList<>();
+        dummy_messages.add(new Message("http://socksmakepeoplesexy.net/images/robotmasters/Skull%20Man.PNG",
+                "Skull Man",
+                "02/01/2015",
+                "Awesome hunt !"));
+
+
+        for(int i = 0 ; i < dummy_messages.size() ; i++) {
+            addCommentToView(viewMessagesLayout, dummy_messages.get(i));
+        }
+
+    }
+
+    public void delete_hunt_yes(View view) {
+        showHunts(true);
+        Toast.makeText(this, "Hunt deleted", Toast.LENGTH_SHORT).show();
+
+        if(currentHuntName != null) {
+            //TODO HTTP request to send delete
+        }
+
+        currentHuntName = null;
+    }
+
+    public void delete_hunt_no(View view) {
+        showHunts(true);
+        Toast.makeText(this, "Canceled", Toast.LENGTH_SHORT).show();
+    }
+
+    private void updateMainLayout(View layout) {
+        mainLayout.removeAllViews();
+        mainLayout.addView(layout);
+    }
+
+    private void updateCurrentHunt(View view) {
+        View parent = (View) view.getParent().getParent();
+        TextView huntNameView = (TextView) parent.findViewById(R.id.hunt_name);
+        currentHuntName = huntNameView.getText().toString();
+    }
+
+    private void addHuntToView(LinearLayout huntsLayout, Hunt hunt, boolean deletable) {
+        LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.hunt, null);
+
+        ImageView huntImage = (ImageView) view.findViewById(R.id.hunt_image);
+        TextView huntName = (TextView) view.findViewById(R.id.hunt_name);
+        LinearLayout huntButtons = (LinearLayout) view.findViewById(R.id.hunt_buttons);
+
+        Picasso.with(getBaseContext()).load(hunt.getImage()).into(huntImage);
+        huntName.setText(hunt.getName());
+        if(!deletable) {
+            huntButtons.setVisibility(LinearLayout.GONE);
+        }
+
+        huntsLayout.addView(view);
+    }
+
+    private void addCommentToView(LinearLayout commentsLayout, Message message) {
+        LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.message, null);
+
+        ImageView messageAvatar = (ImageView) view.findViewById(R.id.message_avatar);
+        TextView messageUsername = (TextView) view.findViewById(R.id.message_username);
+        TextView messageDate = (TextView) view.findViewById(R.id.message_date);
+        TextView messageContent = (TextView) view.findViewById(R.id.message_content);
+
+        Picasso.with(getBaseContext()).load(message.getAvatar()).into(messageAvatar);
+        messageUsername.setText(message.getUsername());
+        messageDate.setText(message.getDate());
+        messageContent.setText(message.getContent());
+
+        commentsLayout.addView(view);
+    }
 }

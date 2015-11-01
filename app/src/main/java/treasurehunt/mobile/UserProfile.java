@@ -1,6 +1,7 @@
 package treasurehunt.mobile;
 
 public class UserProfile {
+    private String mAvatar;
     private String mUsername;
     private String mName;
     private String mEmail;
@@ -8,7 +9,8 @@ public class UserProfile {
     private String mZipcode;
     private String mSexe;
 
-    public UserProfile(String username, String name, String email, String phone, String zipcode, String sexe) {
+    public UserProfile(String avatar, String username, String name, String email, String phone, String zipcode, String sexe) {
+        mAvatar = avatar;
         mUsername = username;
         mEmail = email;
         mPhone = phone;
@@ -63,5 +65,13 @@ public class UserProfile {
 
     public void setName(String name) {
         mName = name;
+    }
+
+    public String getAvatar() {
+        return mAvatar;
+    }
+
+    public void setAvatar(String avatar) {
+        mAvatar = avatar;
     }
 }
