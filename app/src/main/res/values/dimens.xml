@@ -15,4 +15,8 @@
     
     <!-- Dimensions for margins -->
     <dimen name="profile_data_margin"> 50dp </dimen>
+
+    <!-- Image size -->
+    <dimen name="image_width"> 128dp </dimen>
+    <dimen name="image_height"> 128dp </dimen>
 </resources>
