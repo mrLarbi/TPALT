@@ -1,7 +1,6 @@
 package treasurehunt.mobile;
 
 import android.content.Context;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -38,6 +37,7 @@ public class ProfileActivity extends AppCompatActivity {
     private LinearLayout showHuntsLayout;
     private LinearLayout viewMessagesLayout;
     private LinearLayout deleteHuntLayout;
+    private LinearLayout viewFriendsLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +53,7 @@ public class ProfileActivity extends AppCompatActivity {
         showHuntsLayout = (LinearLayout) inflater.inflate(R.layout.show_hunts, null);
         viewMessagesLayout = (LinearLayout) inflater.inflate(R.layout.view_messages, null);
         deleteHuntLayout = (LinearLayout) inflater.inflate(R.layout.delete_hunt, null);
+        viewFriendsLayout = (LinearLayout) inflater.inflate(R.layout.view_friends, null);
 
         showViewProfile();
     }
@@ -83,6 +84,14 @@ public class ProfileActivity extends AppCompatActivity {
             showViewProfile();
             return true;
         }
+        if (id == R.id.profile_menu_view_friends) {
+            showViewFriends();
+            return true;
+        }
+        if (id == R.id.profile_menu_view_messages) {
+            showViewMessages();
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -111,7 +120,7 @@ public class ProfileActivity extends AppCompatActivity {
         updateMainLayout(showProfileLayout);
         //TODO : HTTP request here
 
-        //Dummy user
+        //Dummy friend
 
         String avatar = "http://socksmakepeoplesexy.net/images/robotmasters/Skull%20Man.PNG";
         String username = getString(R.string.dummy_username);
@@ -148,21 +157,40 @@ public class ProfileActivity extends AppCompatActivity {
         sexeView.setText(dummy_user.getSexe());
     }
 
-    public void delete_hunt(View view) {
-        updateCurrentHunt(view);
-        attemptToDeleteHunt();
-    }
+    private void showViewFriends() {
+        viewFriendsLayout.removeAllViews();
+        updateMainLayout(viewFriendsLayout);
 
-    public void see_hunt_comments(View view) {
-        updateCurrentHunt(view);
-        showHuntComments();
+        //TODO HTTP request here
+
+        ArrayList<UserProfile> dummy_friends = new ArrayList<>();
+        dummy_friends.add(new UserProfile(
+                "http://orig09.deviantart.net/5ede/f/2015/044/e/2/spyro_avatar_3_by_avatarw0rld-d8hubci.png",
+                "Spyro",
+                "Spyro",
+                "spyro@gmail.com",
+                "",
+                "",
+                ""));
+        dummy_friends.add(new UserProfile(
+                "http://orig09.deviantart.net/5ede/f/2015/044/e/2/spyro_avatar_3_by_avatarw0rld-d8hubci.png",
+                "Sparx",
+                "Sparx",
+                "sparx@gmail.com",
+                "",
+                "",
+                ""));
+
+        for (int i = 0; i < dummy_friends.size() ; i++) {
+            addFriendToView(viewFriendsLayout, dummy_friends.get(i));
+        }
     }
 
     private void attemptToDeleteHunt() {
         updateMainLayout(deleteHuntLayout);
     }
 
-    private void showHuntComments() {
+    private void showViewMessages() {
         viewMessagesLayout.removeAllViews();
         updateMainLayout(viewMessagesLayout);
 
@@ -181,6 +209,26 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
+    private void updateMainLayout(View layout) {
+        mainLayout.removeAllViews();
+        mainLayout.addView(layout);
+    }
+
+    private void updateCurrentHunt(View view) {
+        View parent = (View) view.getParent().getParent();
+        TextView huntNameView = (TextView) parent.findViewById(R.id.hunt_name);
+        currentHuntName = huntNameView.getText().toString();
+    }
+
+    public void delete_hunt(View view) {
+        updateCurrentHunt(view);
+        attemptToDeleteHunt();
+    }
+
+    public void update_hunt(View view) {
+        Toast.makeText(this, "Not implemented yet, go ahead !", Toast.LENGTH_SHORT).show();
+    }
+
     public void delete_hunt_yes(View view) {
         showHunts(true);
         Toast.makeText(this, "Hunt deleted", Toast.LENGTH_SHORT).show();
@@ -195,17 +243,6 @@ public class ProfileActivity extends AppCompatActivity {
     public void delete_hunt_no(View view) {
         showHunts(true);
         Toast.makeText(this, "Canceled", Toast.LENGTH_SHORT).show();
-    }
-
-    private void updateMainLayout(View layout) {
-        mainLayout.removeAllViews();
-        mainLayout.addView(layout);
-    }
-
-    private void updateCurrentHunt(View view) {
-        View parent = (View) view.getParent().getParent();
-        TextView huntNameView = (TextView) parent.findViewById(R.id.hunt_name);
-        currentHuntName = huntNameView.getText().toString();
     }
 
     private void addHuntToView(LinearLayout huntsLayout, Hunt hunt, boolean deletable) {
@@ -238,6 +275,19 @@ public class ProfileActivity extends AppCompatActivity {
         messageUsername.setText(message.getUsername());
         messageDate.setText(message.getDate());
         messageContent.setText(message.getContent());
+
+        commentsLayout.addView(view);
+    }
+
+    private void addFriendToView(LinearLayout commentsLayout, UserProfile user) {
+        LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.friend, null);
+
+        ImageView friendAvatar = (ImageView) view.findViewById(R.id.friend_avatar);
+        TextView friendUsername = (TextView) view.findViewById(R.id.friend_name);
+
+        Picasso.with(getBaseContext()).load(user.getAvatar()).into(friendAvatar);
+        friendUsername.setText(user.getUsername());
 
         commentsLayout.addView(view);
     }

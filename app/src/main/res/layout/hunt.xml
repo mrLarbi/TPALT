@@ -39,8 +39,8 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Comments"
-            android:onClick="see_hunt_comments"/>
+            android:text="Update"
+            android:onClick="update_hunt"/>
     </LinearLayout>
 
 </LinearLayout>
