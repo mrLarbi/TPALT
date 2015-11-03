@@ -1,4 +1,4 @@
-package treasurehunt.mobile;
+package treasurehunt.mobile.database;
 
 /**
  * Created by mohameddd on 11/1/15.

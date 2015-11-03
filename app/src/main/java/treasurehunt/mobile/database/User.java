@@ -1,6 +1,6 @@
-package treasurehunt.mobile;
+package treasurehunt.mobile.database;
 
-public class UserProfile {
+public class User {
     private String mAvatar;
     private String mUsername;
     private String mName;
@@ -9,7 +9,7 @@ public class UserProfile {
     private String mZipcode;
     private String mSexe;
 
-    public UserProfile(String avatar, String username, String name, String email, String phone, String zipcode, String sexe) {
+    public User(String avatar, String username, String name, String email, String phone, String zipcode, String sexe) {
         mAvatar = avatar;
         mUsername = username;
         mEmail = email;

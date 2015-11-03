@@ -1,4 +1,4 @@
-package treasurehunt.mobile;
+package treasurehunt.mobile.database;
 
 
 public class Message {
