@@ -5,8 +5,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import treasurehunt.mobile.database.Database;
+import treasurehunt.mobile.database.Hunt;
 
 public class CreateHuntActivity extends Activity implements View.OnClickListener {
+
+    private Hunt h;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -20,13 +26,17 @@ public class CreateHuntActivity extends Activity implements View.OnClickListener
         createHuntButton.setOnClickListener(this);
         cancelHuntButton.setOnClickListener(this);
         paristhumbnail.setOnClickListener(this);
+
+        Hunt h = new Hunt("New Hunt");
     }
 
     @Override
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.createHuntButton:
-                //here we send the new hunt to the server
+                TextView title = (TextView) findViewById(R.id.createHuntTitle);
+                h.setName(title.getText().toString());
+                Database.addHunt(h);
                 break;
             case R.id.cancelHuntButton:
                 //here we return to the profile

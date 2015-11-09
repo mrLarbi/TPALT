@@ -1,6 +1,7 @@
 package treasurehunt.mobile;
 
 import android.content.Context;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +19,10 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import treasurehunt.mobile.database.Hunt;
+import treasurehunt.mobile.database.Message;
+import treasurehunt.mobile.database.User;
+
 public class ProfileActivity extends AppCompatActivity {
 
     private String currentHuntName = null;
@@ -30,7 +35,7 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView zipcodeView;
     private TextView sexeView;
 
-    private UserProfile dummy_user;
+    private User dummy_user;
 
     private LinearLayout mainLayout;
     private RelativeLayout showProfileLayout;
@@ -131,7 +136,7 @@ public class ProfileActivity extends AppCompatActivity {
         String sexe = getString(R.string.male);
 
 
-        dummy_user = new UserProfile(
+        dummy_user = new User(
                 avatar,
                 username,
                 name,
@@ -154,7 +159,12 @@ public class ProfileActivity extends AppCompatActivity {
         nameView.setText(dummy_user.getName());
         phoneView.setText(dummy_user.getPhone());
         zipcodeView.setText(dummy_user.getZipcode());
-        sexeView.setText(dummy_user.getSexe());
+        sexeView.setText(dummy_user.getGender());
+    }
+
+    public void delete_hunt(View view) {
+        updateCurrentHunt(view);
+        attemptToDeleteHunt();
     }
 
     private void showViewFriends() {
@@ -243,6 +253,17 @@ public class ProfileActivity extends AppCompatActivity {
     public void delete_hunt_no(View view) {
         showHunts(true);
         Toast.makeText(this, "Canceled", Toast.LENGTH_SHORT).show();
+    }
+
+    private void updateMainLayout(View layout) {
+        mainLayout.removeAllViews();
+        mainLayout.addView(layout);
+    }
+
+    private void updateCurrentHunt(View view) {
+        View parent = (View) view.getParent().getParent();
+        TextView huntNameView = (TextView) parent.findViewById(R.id.hunt_name);
+        currentHuntName = huntNameView.getText().toString();
     }
 
     private void addHuntToView(LinearLayout huntsLayout, Hunt hunt, boolean deletable) {
