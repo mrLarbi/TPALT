@@ -70,6 +70,8 @@
     <string name="profile_created_hunts"> Created hunts </string>
     <string name="profile_current_hunts"> Current hunts </string>
     <string name="profile_view_profile"> View profile </string>
+    <string name="profile_view_friends"> View friends </string>
+    <string name="profile_view_messages"> View messages </string>
 
     <!-- Strings related to Settings -->
 
