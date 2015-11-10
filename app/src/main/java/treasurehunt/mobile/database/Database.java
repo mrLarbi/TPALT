@@ -117,4 +117,8 @@ public class Database implements Serializable {
 
         return null;
     }
+
+    public static void isLogin() {
+        
+    }
 }
