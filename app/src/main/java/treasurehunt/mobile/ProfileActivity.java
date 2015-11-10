@@ -19,6 +19,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import treasurehunt.mobile.database.Database;
 import treasurehunt.mobile.database.Hunt;
 import treasurehunt.mobile.database.Message;
 import treasurehunt.mobile.database.User;
@@ -138,7 +139,15 @@ public class ProfileActivity extends AppCompatActivity {
         String sexe = getString(R.string.male);
 
 
-       User dummy_user = new User(avatar,username,"password1234",name, email, phone, zipcode,sexe);
+        dummy_user = new User(
+                avatar,
+                username,
+                "",
+                name,
+                email,
+                phone,
+                zipcode,
+                sexe);
 
         avatarView = (ImageView) findViewById(R.id.profile_avatar);
         usernameView = (TextView) findViewById(R.id.profile_username);
@@ -171,17 +180,17 @@ public class ProfileActivity extends AppCompatActivity {
         ArrayList<User> dummy_friends = new ArrayList<>();
         dummy_friends.add(new User(
                 "http://orig09.deviantart.net/5ede/f/2015/044/e/2/spyro_avatar_3_by_avatarw0rld-d8hubci.png",
-                "",
                 "Spyro",
+                "",
                 "Spyro",
                 "spyro@gmail.com",
                 "",
                 "",
                 ""));
         dummy_friends.add(new User(
-                "http://orig09.deviantart.net/5ede/f/2015/044/e/2/spyro_avatar_3_by_avatarw0rld-d8hubci.png",
-                "",
+                "http://vignette1.wikia.nocookie.net/spyro/images/a/ac/Sparx4.jpg/revision/latest?cb=20110508045316",
                 "Sparx",
+                "",
                 "Sparx",
                 "sparx@gmail.com",
                 "",
@@ -216,6 +225,17 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
+    private void updateMainLayout(View layout) {
+        mainLayout.removeAllViews();
+        mainLayout.addView(layout);
+    }
+
+    private void updateCurrentHunt(View view) {
+        View parent = (View) view.getParent().getParent();
+        TextView huntNameView = (TextView) parent.findViewById(R.id.hunt_name);
+        currentHuntName = huntNameView.getText().toString();
+    }
+
     public void update_hunt(View view) {
         Toast.makeText(this, "Not implemented yet, go ahead !", Toast.LENGTH_SHORT).show();
     }
@@ -236,22 +256,10 @@ public class ProfileActivity extends AppCompatActivity {
         Toast.makeText(this, "Canceled", Toast.LENGTH_SHORT).show();
     }
 
-    private void updateMainLayout(View layout) {
-        mainLayout.removeAllViews();
-        mainLayout.addView(layout);
-    }
-
-    private void updateCurrentHunt(View view) {
-        View parent = (View) view.getParent().getParent();
-        TextView huntNameView = (TextView) parent.findViewById(R.id.hunt_name);
-        currentHuntName = huntNameView.getText().toString();
-    }
-
     private void addHuntToView(LinearLayout huntsLayout, Hunt hunt, boolean deletable) {
         LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.hunt, null);
 
-        ImageView huntImage = (ImageView) view.findViewById(R.id.hunt_image);
         TextView huntName = (TextView) view.findViewById(R.id.hunt_name);
         LinearLayout huntButtons = (LinearLayout) view.findViewById(R.id.hunt_buttons);
 
@@ -272,6 +280,8 @@ public class ProfileActivity extends AppCompatActivity {
         TextView messageDate = (TextView) view.findViewById(R.id.message_date);
         TextView messageContent = (TextView) view.findViewById(R.id.message_content);
 
+        User author = Database.getUserByUsername(message.getUsername());
+        Picasso.with(getBaseContext()).load(author.getAvatar()).into(messageAvatar);
         messageUsername.setText(message.getUsername());
         messageDate.setText(message.getDate());
         messageContent.setText(message.getContent());
