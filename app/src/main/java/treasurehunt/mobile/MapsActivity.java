@@ -4,6 +4,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import treasurehunt.mobile.database.Point;
 
 public class MapsActivity extends FragmentActivity implements
@@ -77,13 +79,7 @@ public class MapsActivity extends FragmentActivity implements
             mPoints.remove(new Point("",latLng.latitude,latLng.longitude)); // ugly
         }
         else {
-            String locality = geoDecodeLatLong(latLng);
-            mPoints.add(new Point(locality, latLng.latitude, latLng.longitude));
-            mMap.setMyLocationEnabled(true);
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
-             Marker newMarker = mMap.addMarker(new MarkerOptions().title(locality)
-                    .position(latLng));
-            coordinateMarketMap.put(latLng,newMarker);
+                showDialog(latLng);
         }
     }
 
@@ -108,5 +104,37 @@ public class MapsActivity extends FragmentActivity implements
                 return "";
             }
         }
+    }
+
+    private void showDialog(final LatLng latLng) {
+        final String address = geoDecodeLatLong(latLng);
+        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("Add coordinate")
+                .setContentText("Add \n" + address + " \nto the list ?")
+                .setConfirmText("Yes!")
+                .showCancelButton(true)
+                .setCancelText("No.")
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        //
+                        sDialog.cancel();
+                        mPoints.add(new Point(address, latLng.latitude, latLng.longitude));
+                        mMap.setMyLocationEnabled(true);
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
+                        Marker newMarker = mMap.addMarker(new MarkerOptions().title(address)
+                                .position(latLng));
+                        coordinateMarketMap.put(latLng, newMarker);
+                        Toast.makeText(MapsActivity.this, address + " successefully added.", Toast.LENGTH_LONG);
+                    }
+                })
+                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        sDialog.cancel();
+                        Toast.makeText(MapsActivity.this, "Not added", Toast.LENGTH_LONG);
+                    }
+                })
+                .show();
     }
 }
