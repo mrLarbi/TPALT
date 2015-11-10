@@ -13,177 +13,199 @@
     tools:showIn="@layout/activity_register"
     tools:context="treasurehunt.mobile.RegisterActivity">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/appBg">
+        android:layout_height="match_parent">
 
-        <android.support.design.widget.TextInputLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@color/appText">
+            android:layout_height="match_parent"
+            android:background="@color/appBg">
 
-            <EditText
-                android:id="@+id/register_username"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Required"
+                android:textSize="@dimen/subtitle_font"
+                android:textColor="@color/appText"
+                />
+
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/prompt_username"
-                android:inputType="textPersonName"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:backgroundTint="@color/appText"/>
+                android:textColorHint="@color/appText">
 
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@color/appText">
-
-            <EditText
-                android:textColorHint="@color/appText"
-                android:id="@+id/register_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/prompt_password"
-                android:inputType="textPassword"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:backgroundTint="@color/appText" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@color/appText">
-
-            <EditText
-                android:id="@+id/register_password_confirmation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/prompt_confirmation"
-                android:inputType="textPassword"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:backgroundTint="@color/appText" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@color/appText">
-
-            <EditText
-                android:id="@+id/register_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/prompt_email"
-                android:inputType="textEmailAddress"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:backgroundTint="@color/appText"/>
-
-        </android.support.design.widget.TextInputLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Optional"
-            android:textColor="@color/appText"
-            />
-
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@color/appText">
-
-            <EditText
-                android:id="@+id/register_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/prompt_name"
-                android:inputType="textPersonName"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:backgroundTint="@color/appText" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@color/appText">
-
-            <EditText
-                android:id="@+id/register_phone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/prompt_phone"
-                android:inputType="phone"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:backgroundTint="@color/appText" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@color/appText">
-
-            <EditText
-                android:id="@+id/register_zipcode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/prompt_zipcode"
-                android:inputType="number"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:backgroundTint="@color/appText" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
-
-                <RadioButton
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/register_username"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Male"
+                    android:hint="@string/prompt_username"
+                    android:inputType="textPersonName"
+                    android:maxLines="1"
+                    android:singleLine="true"
                     android:textColor="@color/appText"
-                    android:buttonTint="#FFFFFF"/>
+                    android:backgroundTint="@color/appText"/>
 
-                <RadioButton
-                    android:layout_width="wrap_content"
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/appText">
+
+                <EditText
+                    android:textColorHint="@color/appText"
+                    android:id="@+id/register_password"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Female"
+                    android:hint="@string/prompt_password"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:singleLine="true"
                     android:textColor="@color/appText"
-                    android:buttonTint="#FFFFFF"/>
+                    android:backgroundTint="@color/appText" />
 
-            </RadioGroup>
+            </android.support.design.widget.TextInputLayout>
 
-        </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/appText">
 
-        <Button
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:id="@+id/register_button"
-            android:text="Register"
-            android:onClick="attemptToRegister"
-            />
+                <EditText
+                    android:id="@+id/register_password_confirmation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_confirmation"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@color/appText"
+                    android:backgroundTint="@color/appText" />
 
-    </LinearLayout>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/appText">
+
+                <EditText
+                    android:id="@+id/register_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_email"
+                    android:textColor="@color/appText"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:backgroundTint="@color/appText"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Optional"
+                android:textSize="@dimen/subtitle_font"
+                android:textColor="@color/appText"
+                />
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/appText">
+
+                <EditText
+                    android:id="@+id/register_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_name"
+                    android:inputType="textPersonName"
+                    android:textColor="@color/appText"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:backgroundTint="@color/appText" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/appText">
+
+                <EditText
+                    android:id="@+id/register_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_phone"
+                    android:inputType="phone"
+                    android:textColor="@color/appText"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:backgroundTint="@color/appText" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/appText">
+
+                <EditText
+                    android:id="@+id/register_zipcode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_zipcode"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:textColor="@color/appText"
+                    android:singleLine="true"
+                    android:backgroundTint="@color/appText" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Male"
+                        android:textColor="@color/appText"
+                        android:buttonTint="#FFFFFF"/>
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Female"
+                        android:textColor="@color/appText"
+                        android:buttonTint="#FFFFFF"/>
+
+                </RadioGroup>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/register_button"
+                android:text="Register"
+                android:onClick="attemptToRegister"
+                />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 
 </RelativeLayout>

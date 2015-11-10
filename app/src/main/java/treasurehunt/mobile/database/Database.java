@@ -118,7 +118,13 @@ public class Database implements Serializable {
         return null;
     }
 
-    public static void isLogin() {
-        
+    public static boolean isLogin(String username, String password) {
+        User user = getUserByUsername(username);
+        if(user != null) {
+            if(user.getPassword().equals(password)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

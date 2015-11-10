@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.content.Intent;
 
 import android.content.CursorLoader;
 import android.content.Loader;
@@ -41,6 +42,8 @@ import static android.Manifest.permission.READ_CONTACTS;
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
+    public final static String EXTRA_USERNAME = "treasurehunt.mobile.LoginActivity.USERNAME";
+
     /**
      * Id to identity READ_CONTACTS permission request.
      */
@@ -52,7 +55,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private UserLoginTask mAuthTask = null;
 
     // UI references.
-    private AutoCompleteTextView mEmailView;
+    private AutoCompleteTextView mUsernameView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
@@ -62,7 +65,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mUsernameView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -105,7 +108,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             return true;
         }
         if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
-            Snackbar.make(mEmailView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
+            Snackbar.make(mUsernameView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
                     .setAction(android.R.string.ok, new View.OnClickListener() {
                         @Override
                         @TargetApi(Build.VERSION_CODES.M)
@@ -144,11 +147,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         // Reset errors.
-        mEmailView.setError(null);
+        mUsernameView.setError(null);
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
+        String username = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
@@ -179,21 +182,27 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         }
 
-        switch (Validator.isValidMail(email)) {
+        switch (Validator.isValidUserName(username)) {
             case Validator.OK :
                 break;
-            case Validator.EMAIL_ERROR_MATCH:
-                mEmailView.setError(getString(R.string.error_invalid_email_regexp));
-                focusView = mEmailView;
+            case Validator.USERNAME_ERROR_MATCH:
+                mUsernameView.setError(getString(R.string.error_invalid_username_regexp));
+                focusView = mUsernameView;
                 cancel = true;
                 break;
-            case Validator.EMAIL_ERROR_EMPTY:
-                mEmailView.setError(getString(R.string.error_field_required));
-                focusView = mEmailView;
+            case Validator.USERNAME_ERROR_TOOLONG:
+                mUsernameView.setError(getString(R.string.error_invalid_username_length_long));
+                focusView = mUsernameView;
+                cancel = true;
+                break;
+            case Validator.USERNAME_ERROR_TOOSHORT:
+                mUsernameView.setError(getString(R.string.error_invalid_username_length_short));
+                focusView = mUsernameView;
                 cancel = true;
                 break;
             default:
                 break;
+
         }
 
         if (cancel) {
@@ -204,8 +213,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the friend login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+            /*mAuthTask = new UserLoginTask(username, password);
+            mAuthTask.execute((Void) null);*/
+            if(Database.isLogin(username, password)) {
+                Database.CURRENT_USER = username;
+                Intent intent = new Intent(this, ProfileActivity.class);
+                intent.putExtra(EXTRA_USERNAME, username);
+                startActivity(intent);
+            }
         }
     }
 
@@ -296,7 +311,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 new ArrayAdapter<>(LoginActivity.this,
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
 
-        mEmailView.setAdapter(adapter);
+        mUsernameView.setAdapter(adapter);
     }
 
     /**

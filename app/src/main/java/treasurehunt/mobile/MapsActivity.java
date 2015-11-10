@@ -72,7 +72,7 @@ public class MapsActivity extends FragmentActivity implements
     }
 
     @Override
-    public void onMapClick(LatLng latLng) {
+    public void onMapLongClick(LatLng latLng) {
         if (coordinateMarketMap.keySet().contains(latLng)) {
             Marker marker = coordinateMarketMap.get(latLng);
             marker.remove();
@@ -84,7 +84,7 @@ public class MapsActivity extends FragmentActivity implements
     }
 
     @Override
-    public void onMapLongClick(LatLng latLng) {
+    public void onMapClick(LatLng latLng) {
         CameraUpdateFactory.zoomIn();
     }
 
