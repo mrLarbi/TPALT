@@ -21,10 +21,10 @@ public class Database implements Serializable {
     private static String lastnames[] = {  "Berger", "Chitimbo", "Kobrosli", "Amin", "Le Nestour", "Telera", "Shavgulidze", "Kulishev", "Calderon", "Larbi Youcef",
             "Zelmat", "Rahault", "Chaniot", "Nguyen", "Bonnet", "Leoture", "Flissate", "Zeghdaoui"};
 
-    private static Point westest = new Point("West", "48.850543", "2.251849");
-    private static Point eastest = new Point("East", "48.850543", "2.241849");
-    private static Point northest = new Point("North", "48.840543", "2.245849");
-    private static Point southest = new Point("South", "48.860543", "2.245849");
+    private static Point westest = new Point("West", 48.850543, 2.251849);
+    private static Point eastest = new Point("East", 48.850543, 2.241849);
+    private static Point northest = new Point("North", 48.840543, 2.245849);
+    private static Point southest = new Point("South", 48.860543, 2.245849);
 
     private Database() {}
 
@@ -61,10 +61,8 @@ public class Database implements Serializable {
 
                 for(int j = 0; j < 10; j++) {
                     String pname = "Point " + j;
-                    String lat =    Double.toString(rg.nextDouble() * (Double.parseDouble(northest.getLat()) - Double.parseDouble(southest.getLat())) +
-                            Double.parseDouble(southest.getLat()));
-                    String lon =    Double.toString(rg.nextDouble() * (Double.parseDouble(eastest.getLat()) - Double.parseDouble(westest.getLat())) +
-                            Double.parseDouble(westest.getLat()));
+                    double lat =    rg.nextDouble() * (northest.getLat() - southest.getLat()) + southest.getLat();
+                    double lon =    rg.nextDouble() * (eastest.getLat() - westest.getLat()) + westest.getLat();
                     Point p = new Point(pname, lat, lon);
                     h.addPoint(p);
                 }

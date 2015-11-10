@@ -1,7 +1,7 @@
 package treasurehunt.mobile;
 
 import android.content.Context;
-import android.media.Image;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -83,6 +83,8 @@ public class ProfileActivity extends AppCompatActivity {
         }
         if (id == R.id.profile_menu_current_hunts) {
             showHunts(false);
+            Intent createHunt = new Intent(this, MapsActivity.class);
+            startActivity(createHunt);
             return true;
         }
         if (id == R.id.profile_menu_view_profile) {
@@ -113,8 +115,8 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         ArrayList<Hunt> dummyHunts = new ArrayList<>();
-        dummyHunts.add(new Hunt("http://vignette2.wikia.nocookie.net/megaman/images/a/af/WilyCastle2.png/revision/latest?cb=20100315053827", "Wily castle 2"));
-        dummyHunts.add(new Hunt("http://iamericm.com/wp-content/uploads/sites/2/2013/11/rock-man-4-minus-infinity-screen-cap10.png", "Cossack castle"));
+        dummyHunts.add(new Hunt("Wily castle 2"));
+        dummyHunts.add(new Hunt("Cossack castle"));
 
         for(int i = 0 ; i < dummyHunts.size() ; i++) {
             addHuntToView(showHuntsLayout, dummyHunts.get(i), deletable);
@@ -136,14 +138,7 @@ public class ProfileActivity extends AppCompatActivity {
         String sexe = getString(R.string.male);
 
 
-        dummy_user = new User(
-                avatar,
-                username,
-                name,
-                email,
-                phone,
-                zipcode,
-                sexe);
+       User dummy_user = new User(avatar,username,"password1234",name, email, phone, zipcode,sexe);
 
         avatarView = (ImageView) findViewById(R.id.profile_avatar);
         usernameView = (TextView) findViewById(R.id.profile_username);
@@ -173,17 +168,19 @@ public class ProfileActivity extends AppCompatActivity {
 
         //TODO HTTP request here
 
-        ArrayList<UserProfile> dummy_friends = new ArrayList<>();
-        dummy_friends.add(new UserProfile(
+        ArrayList<User> dummy_friends = new ArrayList<>();
+        dummy_friends.add(new User(
                 "http://orig09.deviantart.net/5ede/f/2015/044/e/2/spyro_avatar_3_by_avatarw0rld-d8hubci.png",
+                "",
                 "Spyro",
                 "Spyro",
                 "spyro@gmail.com",
                 "",
                 "",
                 ""));
-        dummy_friends.add(new UserProfile(
+        dummy_friends.add(new User(
                 "http://orig09.deviantart.net/5ede/f/2015/044/e/2/spyro_avatar_3_by_avatarw0rld-d8hubci.png",
+                "",
                 "Sparx",
                 "Sparx",
                 "sparx@gmail.com",
@@ -207,7 +204,7 @@ public class ProfileActivity extends AppCompatActivity {
         //dummy messages
 
         ArrayList<Message> dummy_messages = new ArrayList<>();
-        dummy_messages.add(new Message("http://socksmakepeoplesexy.net/images/robotmasters/Skull%20Man.PNG",
+        dummy_messages.add(new Message(
                 "Skull Man",
                 "02/01/2015",
                 "Awesome hunt !"));
@@ -217,22 +214,6 @@ public class ProfileActivity extends AppCompatActivity {
             addCommentToView(viewMessagesLayout, dummy_messages.get(i));
         }
 
-    }
-
-    private void updateMainLayout(View layout) {
-        mainLayout.removeAllViews();
-        mainLayout.addView(layout);
-    }
-
-    private void updateCurrentHunt(View view) {
-        View parent = (View) view.getParent().getParent();
-        TextView huntNameView = (TextView) parent.findViewById(R.id.hunt_name);
-        currentHuntName = huntNameView.getText().toString();
-    }
-
-    public void delete_hunt(View view) {
-        updateCurrentHunt(view);
-        attemptToDeleteHunt();
     }
 
     public void update_hunt(View view) {
@@ -274,7 +255,6 @@ public class ProfileActivity extends AppCompatActivity {
         TextView huntName = (TextView) view.findViewById(R.id.hunt_name);
         LinearLayout huntButtons = (LinearLayout) view.findViewById(R.id.hunt_buttons);
 
-        Picasso.with(getBaseContext()).load(hunt.getImage()).into(huntImage);
         huntName.setText(hunt.getName());
         if(!deletable) {
             huntButtons.setVisibility(LinearLayout.GONE);
@@ -292,7 +272,6 @@ public class ProfileActivity extends AppCompatActivity {
         TextView messageDate = (TextView) view.findViewById(R.id.message_date);
         TextView messageContent = (TextView) view.findViewById(R.id.message_content);
 
-        Picasso.with(getBaseContext()).load(message.getAvatar()).into(messageAvatar);
         messageUsername.setText(message.getUsername());
         messageDate.setText(message.getDate());
         messageContent.setText(message.getContent());
@@ -300,7 +279,7 @@ public class ProfileActivity extends AppCompatActivity {
         commentsLayout.addView(view);
     }
 
-    private void addFriendToView(LinearLayout commentsLayout, UserProfile user) {
+    private void addFriendToView(LinearLayout commentsLayout, User user) {
         LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.friend, null);
 

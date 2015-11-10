@@ -1,18 +1,18 @@
 package treasurehunt.mobile.database;
 
+import com.google.android.gms.maps.model.LatLng;
+
 /**
  * Created by Manu on 03-Nov-15.
  */
-public class Point {
+public class Point{
 
     private String name;
-    private String lat;
-    private String lon;
+    LatLng mlatLng;
 
-    public Point (String name, String lat, String lon) {
+    public Point (String name, double lat, double lon) {
         this.name = name;
-        this.lat = lat;
-        this.lon = lon;
+        mlatLng = new LatLng(lat, lon);
     }
 
     public String getName() {
@@ -23,19 +23,23 @@ public class Point {
         this.name = name;
     }
 
-    public String getLat() {
-        return lat;
+    public double getLat() {
+        return mlatLng.longitude;
     }
 
-    public void setLat(String lat) {
-        this.lat = lat;
+    public double getLon() {
+        return this.mlatLng.longitude;
     }
 
-    public String getLon() {
-        return lon;
+    @Override
+    public boolean equals(Object latLong) {
+        Point second = (Point)latLong;
+        LatLng secondLatLang = second.mlatLng;
+        return secondLatLang.equals(this.mlatLng);
     }
 
-    public void setLon(String lon) {
-        this.lon = lon;
+    @Override
+    public int hashCode() {
+        return mlatLng.hashCode();
     }
 }

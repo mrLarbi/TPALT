@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/createHuntTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textColor="@color/appText"
+        android:background="@color/appBg"
+        android:textSize="@dimen/title_font"
+        android:text="@string/newHuntTitle"/>
+
+    <include layout="@layout/display_hunts" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10px"
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/createHuntButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancelHunt"
+            android:layout_marginRight="25px"/>
+
+        <Button
+            android:id="@+id/cancelHuntButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25px"
+            android:text="@string/createHunt" />
+    </LinearLayout>
+</LinearLayout>
