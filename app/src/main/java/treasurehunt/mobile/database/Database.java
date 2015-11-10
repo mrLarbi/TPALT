@@ -31,6 +31,9 @@ public class Database implements Serializable {
     public static void init() {
         File db = new File("treasurehunt.db");
         if(!db.exists()) {
+            users = new ArrayList<>();
+            hunts = new ArrayList<>();
+            messages = new ArrayList<>();
 
             Random rg = new Random(System.currentTimeMillis());
 
@@ -39,14 +42,14 @@ public class Database implements Serializable {
             for(int i = 0; i < 50; i++) {
                 int namesize = names.length;
 
-                avatar = "http://www.serebii.net/battletrozei/pokemon/" + String.format("%03d", Integer.toString(rg.nextInt(721) + 1)) + ".png";
+                avatar = "http://www.serebii.net/battletrozei/pokemon/" + String.format("%03d", rg.nextInt(721) + 1) + ".png";
                 username = names[rg.nextInt(namesize)];
                 password = "Password1234";
                 name = names[rg.nextInt(namesize)] + " " + lastnames[rg.nextInt(namesize)];
                 email = names[rg.nextInt(namesize)] + "@gmail.com";
-                phone = String.format("%02d", Integer.toString(rg.nextInt(100))) + String.format("%02d", Integer.toString(rg.nextInt(100))) +
-                        String.format("%02d", Integer.toString(rg.nextInt(100))) + String.format("%02d", Integer.toString(rg.nextInt(100))) +
-                        String.format("%02d", Integer.toString(rg.nextInt(100)));
+                phone = String.format("%02d", rg.nextInt(100)) + String.format("%02d", rg.nextInt(100)) +
+                        String.format("%02d", rg.nextInt(100)) + String.format("%02d", rg.nextInt(100)) +
+                        String.format("%02d", rg.nextInt(100));
                 if(rg.nextBoolean()) gender = "M"; else gender = "F";
                 zcode = Integer.toString(rg.nextInt(100000));
 
